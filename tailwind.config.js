@@ -3,11 +3,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        heading: ['"Darumadrop One"', 'serif'],
-        subheading: ['"Special Elite"', 'cursive'],
-        sans: ['"Nunito Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        hand: ['"Gaegu"', 'cursive'],
-        rubik: ['Rubik', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['"Barlow Condensed"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['"Manufacturing Consent"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['"Pirata One"', 'serif'],
+        medieval: ['"UnifrakturCook"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       colors: {
         goldenPollen: {
