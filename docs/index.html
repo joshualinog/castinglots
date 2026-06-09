@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Casting Lots</title>
+  <meta name="description" content="Cast lots for a random verse using local LEB Bible data and random.org." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module" crossorigin src="/castinglots/assets/index-qrdvg3YU.js"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+  <div class="mx-auto flex min-h-screen max-w-4xl flex-col justify-center px-6 py-10 sm:px-8">
+    <header class="text-center">
+      <p class="text-sm uppercase tracking-[0.35em] text-slate-500">Casting Lots</p>
+      <h1 class="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">Random Verse Casting</h1>
+      <p class="mt-4 max-w-2xl mx-auto text-base leading-7 text-slate-400 sm:text-lg">
+        A modern starter page for casting lots with the local LEB Bible data in <code>js/leb/</code>.
+        No legacy styling, no jQuery, no external Bible API required for verse text.
+      </p>
+    </header>
+
+    <main class="mt-12 space-y-8">
+      <div class="rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl shadow-slate-800/30">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-xl font-medium text-white">Cast the Lot</h2>
+            <p id="status" class="mt-2 text-sm leading-6 text-slate-400">Loading Bible data…</p>
+          </div>
+          <button id="castButton" class="inline-flex items-center justify-center rounded-2xl bg-slate-100 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-50" disabled>
+            Cast a Lot
+          </button>
+        </div>
+      </div>
+
+      <section id="verseCard" class="hidden rounded-[2rem] border border-slate-800 bg-slate-900/90 p-8 shadow-2xl shadow-slate-800/40">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.35em] text-slate-500">Selected verse</p>
+            <p id="citation" class="mt-2 text-2xl font-semibold text-white"></p>
+          </div>
+          <p id="sourceBadge" class="rounded-full bg-slate-800 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-400"></p>
+        </div>
+        <blockquote id="verseText" class="mt-8 text-lg leading-8 text-slate-200"></blockquote>
+        <p id="note" class="mt-6 text-sm text-slate-500"></p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
