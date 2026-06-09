@@ -6,7 +6,7 @@
   <title>Casting Lots</title>
   <meta name="description" content="Cast lots for a random verse using local LEB Bible data and random.org." />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script type="module" crossorigin src="/castinglots/assets/index-qrdvg3YU.js"></script>
+  <script type="module" crossorigin src="/castinglots/assets/index-C83Ob2gn.js"></script>
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
   <div class="mx-auto flex min-h-screen max-w-4xl flex-col justify-center px-6 py-10 sm:px-8">
@@ -45,5 +45,39 @@
       </section>
     </main>
   </div>
+
+  <div id="castModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/90 px-4 py-8">
+    <div class="relative w-full max-w-3xl rounded-[2rem] border border-slate-800 bg-slate-950 p-8 shadow-2xl shadow-slate-950/70">
+      <button id="closeModal" class="absolute right-4 top-4 hidden rounded-full bg-slate-800 px-3 py-2 text-xl font-semibold text-slate-200 transition hover:bg-slate-700">×</button>
+      <div class="space-y-4">
+        <div>
+          <p class="text-sm uppercase tracking-[0.35em] text-slate-500">Casting the lot</p>
+          <h2 class="mt-2 text-3xl font-semibold text-white">Watch the reveal</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-400">The book, chapter, verse and text will arrive in sequence.</p>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="rounded-3xl border border-slate-800 bg-slate-900/90 p-6 text-center">
+            <p class="text-xs uppercase tracking-[0.35em] text-slate-500">Book</p>
+            <p id="modalBookName" class="mt-4 text-2xl font-semibold text-white opacity-0 transition-opacity duration-700">...</p>
+          </div>
+          <div class="rounded-3xl border border-slate-800 bg-slate-900/90 p-6 text-center">
+            <p class="text-xs uppercase tracking-[0.35em] text-slate-500">Chapter</p>
+            <p id="modalChapterNumber" class="mt-4 text-2xl font-semibold text-white opacity-0 transition-opacity duration-700">...</p>
+          </div>
+          <div class="rounded-3xl border border-slate-800 bg-slate-900/90 p-6 text-center">
+            <p class="text-xs uppercase tracking-[0.35em] text-slate-500">Verse</p>
+            <p id="modalVerseNumber" class="mt-4 text-2xl font-semibold text-white opacity-0 transition-opacity duration-700">...</p>
+          </div>
+        </div>
+
+        <div class="rounded-[2rem] border border-slate-800 bg-slate-900/90 p-6">
+          <p class="text-xs uppercase tracking-[0.35em] text-slate-500">Verse text</p>
+          <div id="modalTyping" class="mt-4 min-h-[8rem] whitespace-pre-wrap break-words text-lg leading-8 text-slate-200"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>

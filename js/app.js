@@ -1,10 +1,11 @@
 const statusElement = document.getElementById('status');
 const castButton = document.getElementById('castButton');
-const verseCard = document.getElementById('verseCard');
-const verseTextElement = document.getElementById('verseText');
-const citationElement = document.getElementById('citation');
-const sourceBadge = document.getElementById('sourceBadge');
-const noteElement = document.getElementById('note');
+const castModal = document.getElementById('castModal');
+const closeModalButton = document.getElementById('closeModal');
+const modalBookName = document.getElementById('modalBookName');
+const modalChapterNumber = document.getElementById('modalChapterNumber');
+const modalVerseNumber = document.getElementById('modalVerseNumber');
+const modalTyping = document.getElementById('modalTyping');
 
 const BOOKS_URL = './js/leb/books.json';
 const VERSES_URL = './js/leb/verses.json';
@@ -20,12 +21,28 @@ function showStatus(message, isError = false) {
   statusElement.classList.toggle('text-slate-400', !isError);
 }
 
-function showVerseCard() {
-  verseCard.classList.remove('hidden');
+function showModal() {
+  castModal.classList.remove('hidden');
+  castModal.classList.add('flex');
 }
 
-function hideVerseCard() {
-  verseCard.classList.add('hidden');
+function hideModal() {
+  castModal.classList.add('hidden');
+  castModal.classList.remove('flex');
+}
+
+function resetModal() {
+  modalBookName.textContent = '...';
+  modalChapterNumber.textContent = '...';
+  modalVerseNumber.textContent = '...';
+  modalTyping.textContent = '';
+  modalBookName.classList.remove('opacity-100');
+  modalBookName.classList.add('opacity-0');
+  modalChapterNumber.classList.remove('opacity-100');
+  modalChapterNumber.classList.add('opacity-0');
+  modalVerseNumber.classList.remove('opacity-100');
+  modalVerseNumber.classList.add('opacity-0');
+  closeModalButton.classList.add('hidden');
 }
 
 function getVerseKey(book, chapter, verse) {
@@ -103,18 +120,42 @@ async function getRandomInt(min, max) {
   return { value: getFallbackRandom(min, max), source: 'local fallback' };
 }
 
+function pause(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function revealText(element, text, hold = 1200) {
+  element.textContent = text;
+  element.classList.remove('opacity-0');
+  element.classList.add('opacity-100');
+  await pause(hold);
+}
+
+async function typeText(element, text, speed = 30) {
+  element.textContent = '';
+  for (const char of text) {
+    element.textContent += char;
+    await pause(speed);
+  }
+}
+
 async function castLot() {
   try {
-    castButton.disabled = true;
-    hideVerseCard();
+    showModal();
+    resetModal();
     showStatus('Casting lots…');
 
     const bookIndexResult = await getRandomInt(1, books.length);
     const bookIndex = bookIndexResult.value - 1;
     const selectedBook = books[bookIndex];
 
+    await revealText(modalBookName, selectedBook.human);
+    await pause(800);
+
     const chapterIndexResult = await getRandomInt(1, selectedBook.chapters);
     const selectedChapter = chapterIndexResult.value;
+    await revealText(modalChapterNumber, selectedChapter);
+    await pause(800);
 
     const chapterKey = `${selectedBook.osis}|${selectedChapter}`;
     const versesInChapter = chapterVerseCount.get(chapterKey) || 0;
@@ -124,24 +165,25 @@ async function castLot() {
 
     const verseIndexResult = await getRandomInt(1, versesInChapter);
     const selectedVerse = verseIndexResult.value;
+    await revealText(modalVerseNumber, selectedVerse);
+    await pause(800);
 
     const verseText = verseMap.get(getVerseKey(selectedBook.osis, selectedChapter, selectedVerse));
     if (!verseText) {
       throw new Error('Verse text not found locally.');
     }
 
-    citationElement.textContent = `${selectedBook.human} ${selectedChapter}:${selectedVerse}`;
-    verseTextElement.textContent = verseText;
-    sourceBadge.textContent = `source: ${bookIndexResult.source} / ${chapterIndexResult.source} / ${verseIndexResult.source}`;
-    noteElement.textContent = 'Verse text comes from the local LEB JSON data in js/leb/verses.json.';
-    showVerseCard();
-    showStatus('Lot cast successfully.');
+    await typeText(modalTyping, verseText, 30);
+    showStatus('Verse ready. Close the modal when you are done.');
   } catch (error) {
     showStatus(error.message || 'An error occurred while casting lots.', true);
+    modalTyping.textContent = 'Unable to reveal the verse. Please try again.';
   } finally {
+    closeModalButton.classList.remove('hidden');
     castButton.disabled = false;
   }
 }
 
 castButton.addEventListener('click', castLot);
+closeModalButton.addEventListener('click', hideModal);
 window.addEventListener('DOMContentLoaded', buildBibleIndex);
