@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Gaegu:wght@400;700&family=Nunito+Sans:wght@400;600;700&family=Rubik:wght@900&family=Special+Elite&display=swap');
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  :root {
+    --font-heading: "Darumadrop One", serif;
+    --font-subheading: "Special Elite", cursive;
+    --font-sans: "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-hand: "Gaegu", cursive;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    color: #f8fafc;
+    background-color: #0f172a;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: #0f172a;
+    color: #f8fafc;
+  }
+
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+
+  .font-subheading {
+    font-family: var(--font-subheading);
+  }
+
+  .font-hand {
+    font-family: var(--font-hand);
+  }
+
+  .rubik-black {
+    font-family: 'Rubik', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 900;
+  }
+}
