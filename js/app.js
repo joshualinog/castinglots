@@ -1,6 +1,5 @@
 const statusElement = document.getElementById('status');
 const castButton = document.getElementById('castButton');
-const retryButton = document.getElementById('retryButton');
 const castModal = document.getElementById('castModal');
 const closeModalButton = document.getElementById('closeModal');
 const modalBookName = document.getElementById('modalBookName');
@@ -66,8 +65,6 @@ async function fetchJson(url) {
 }
 
 async function buildBibleIndex() {
-  retryButton.classList.add('hidden');
-  retryButton.disabled = true;
   castButton.disabled = true;
   showStatus('Loading local Bible data…');
 
@@ -89,13 +86,9 @@ async function buildBibleIndex() {
     }
 
     showStatus('Bible data loaded. Cast a lot to choose a verse.');
-    retryButton.classList.add('hidden');
-    retryButton.disabled = true;
     castButton.disabled = false;
   } catch (error) {
-    showStatus(`Unable to load Bible data. ${error.message} Click Retry or refresh.`, true);
-    retryButton.classList.remove('hidden');
-    retryButton.disabled = false;
+    showStatus(`Unable to load Bible data. ${error.message} Refresh the page to retry.`, true);
   }
 }
 
@@ -196,13 +189,6 @@ async function castLot() {
     castButton.disabled = false;
   }
 }
-
-retryButton.addEventListener('click', async () => {
-  retryButton.disabled = true;
-  retryButton.textContent = 'Retrying…';
-  await buildBibleIndex();
-  retryButton.textContent = 'Retry';
-});
 
 castButton.addEventListener('click', castLot);
 closeModalButton.addEventListener('click', hideModal);
