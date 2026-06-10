@@ -1,20 +1,5 @@
 {
   "version": 3,
   "buildCommand": "npm run build",
-  "outputDirectory": "docs",
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "docs"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    }
-  ]
+  "outputDirectory": "docs"
 }
