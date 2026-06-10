@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && mkdir -p docs/js && cp -R js/leb docs/js/leb && cp CNAME docs/CNAME",
     "preview": "vite preview"
   },
   "devDependencies": {

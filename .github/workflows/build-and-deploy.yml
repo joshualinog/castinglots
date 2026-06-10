@@ -28,6 +28,9 @@ jobs:
       - name: Build site
         run: npm run build
 
+      - name: Copy local Bible JSON data into built docs
+        run: mkdir -p docs/js && cp -R js/leb docs/js/leb
+
       - name: Copy custom domain file into built docs
         run: cp CNAME docs/CNAME
 

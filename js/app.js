@@ -7,8 +7,8 @@ const modalChapterNumber = document.getElementById('modalChapterNumber');
 const modalVerseNumber = document.getElementById('modalVerseNumber');
 const modalTyping = document.getElementById('modalTyping');
 
-const BOOKS_URL = './js/leb/books.json';
-const VERSES_URL = './js/leb/verses.json';
+const BOOKS_URL = '/js/leb/books.json';
+const VERSES_URL = '/js/leb/verses.json';
 const RANDOM_ORG_URL = (min, max) => `https://www.random.org/integers/?num=1&min=${min}&max=${max}&col=1&base=10&format=plain&rnd=new`;
 
 const verseMap = new Map();
