@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Casting Lots</title>
   <meta name="description" content="Cast lots for a random verse using local LEB Bible data and random.org." />
-  <script type="module" crossorigin src="/assets/index-Bt9g-FYl.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-DMLDJ-yj.css">
+  <script type="module" crossorigin src="/assets/index-pMgnb7B4.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DwdsvFS1.css">
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
   <div class="mx-auto flex min-h-screen max-w-4xl flex-col justify-center px-6 py-10 sm:px-8">
@@ -26,9 +26,14 @@
             <h2 class="text-xl font-medium text-white">Cast the Lot</h2>
             <p id="status" class="mt-2 text-sm leading-6 text-slate-400">Loading Bible data…</p>
           </div>
-          <button id="castButton" class="inline-flex items-center justify-center rounded-2xl bg-slate-100 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-50" disabled>
-            Cast a Lot
-          </button>
+          <div class="flex flex-wrap gap-3">
+            <button id="castButton" class="inline-flex items-center justify-center rounded-2xl bg-slate-100 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-50" disabled>
+              Cast a Lot
+            </button>
+            <button id="retryButton" type="button" class="hidden inline-flex items-center justify-center rounded-2xl border border-slate-700 bg-slate-900 px-6 py-3 text-sm font-semibold text-slate-100 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50" disabled>
+              Retry
+            </button>
+          </div>
         </div>
       </div>
 
