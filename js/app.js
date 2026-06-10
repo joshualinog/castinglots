@@ -97,24 +97,33 @@ function getFallbackRandom(min, max) {
 }
 
 async function getRandomOrgInt(min, max) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 3000);
+  const url = RANDOM_ORG_URL(min, max);
+  const maxAttempts = 3;
 
-  try {
-    const response = await fetch(RANDOM_ORG_URL(min, max), { signal: controller.signal });
-    if (!response.ok) {
-      throw new Error('random.org request failed');
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3000);
+
+    try {
+      const response = await fetch(url, { signal: controller.signal, cache: 'no-store' });
+      if (!response.ok) {
+        throw new Error(`random.org request failed: ${response.status}`);
+      }
+      const text = (await response.text()).trim();
+      const value = Number(text);
+      if (!Number.isInteger(value)) {
+        throw new Error('random.org returned invalid data');
+      }
+      return { value, source: 'random.org' };
+    } catch (error) {
+      if (attempt < maxAttempts) {
+        await pause(250 * attempt);
+        continue;
+      }
+      return null;
+    } finally {
+      clearTimeout(timeout);
     }
-    const text = (await response.text()).trim();
-    const value = Number(text);
-    if (!Number.isInteger(value)) {
-      throw new Error('random.org returned invalid data');
-    }
-    return { value, source: 'random.org' };
-  } catch (error) {
-    return null;
-  } finally {
-    clearTimeout(timeout);
   }
 }
 
