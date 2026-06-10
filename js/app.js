@@ -9,7 +9,7 @@ const modalTyping = document.getElementById('modalTyping');
 
 const BOOKS_URL = '/js/leb/books.json';
 const VERSES_URL = '/js/leb/verses.json';
-const RANDOM_ORG_URL = (min, max) => `https://www.random.org/integers/?num=1&min=${min}&max=${max}&col=1&base=10&format=plain&rnd=new`;
+const RANDOM_ORG_PROXY_URL = window.RANDOM_ORG_PROXY_URL || '/api/random';
 
 const verseMap = new Map();
 const chapterVerseCount = new Map();
@@ -97,7 +97,6 @@ function getFallbackRandom(min, max) {
 }
 
 async function getRandomOrgInt(min, max) {
-  const url = RANDOM_ORG_URL(min, max);
   const maxAttempts = 3;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
@@ -105,15 +104,28 @@ async function getRandomOrgInt(min, max) {
     const timeout = setTimeout(() => controller.abort(), 3000);
 
     try {
-      const response = await fetch(url, { signal: controller.signal, cache: 'no-store' });
+      const response = await fetch(RANDOM_ORG_PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ min, max }),
+        signal: controller.signal,
+        cache: 'no-store'
+      });
+
       if (!response.ok) {
-        throw new Error(`random.org request failed: ${response.status}`);
+        throw new Error(`random.org proxy failed: ${response.status}`);
       }
-      const text = (await response.text()).trim();
-      const value = Number(text);
+
+      const json = await response.json();
+      if (json.error) {
+        throw new Error(json.error.message || 'Random.org proxy error');
+      }
+
+      const value = Number(json.result?.random?.data?.[0]);
       if (!Number.isInteger(value)) {
-        throw new Error('random.org returned invalid data');
+        throw new Error('Random.org proxy returned invalid data');
       }
+
       return { value, source: 'random.org' };
     } catch (error) {
       if (attempt < maxAttempts) {
