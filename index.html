@@ -6,6 +6,10 @@
   <title>Casting Lots</title>
   <meta name="description" content="Cast lots for a random verse using local LEB Bible data and random.org." />
   <link rel="stylesheet" href="src/style.css">
+  <script>
+    // Point GitHub Pages frontend to the live Vercel Random.org proxy.
+    window.RANDOM_ORG_PROXY_URL = 'https://castinglots.vercel.app/api/random';
+  </script>
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
   <div class="mx-auto flex min-h-screen max-w-4xl flex-col justify-center px-6 py-10 sm:px-8">
